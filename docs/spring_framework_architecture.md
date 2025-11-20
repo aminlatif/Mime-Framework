@@ -4,6 +4,7 @@
 * **Integration** with *ORM tools*, *messaging systems*, *cloud services*.
 * **Loose coupling** -> *Dependency injection* and *AOP*.
 * **Maintainability** and **Scalability** -> supports both *monolithic* and *microservice* architecture.
+* Spring architecture follows a principle of Modularity that contains multiple modules (about 20 modules) and these modules are categorized under 4 main areas
 
 ## Core Principles
 ### 1. [Dependency Injection (DI)](https://docs.spring.io/spring-framework/reference/core/beans/introduction.html)
@@ -37,7 +38,9 @@
 ## Architecture Overview
 **Independent** yet **interconnected** modules:
 
-![Spring framework architecture overview](images/spring_framework.webp "Architecture Overview")
+![Spring framework architecture overview](images/spring_framework_01.webp "Architecture Overview")
+
+![Spring framework architecture overview](images/spring_framework_02.webp "Architecture Overview")
 
 Developers can include only the required modules for a given project -> minimizing overhead.
 
@@ -74,13 +77,19 @@ Developers can include only the required modules for a given project -> minimizi
 * Simplifies ORM configuration.
 * Consistent transaction management.
 
+#### [Spring JMS Module](https://github.com/spring-projects/spring-framework/tree/main/spring-jms)
+
+#### [Spring OXM Module](https://github.com/spring-projects/spring-framework/tree/main/spring-oxm)
+
+#### [Spring R2DBC Module](https://github.com/spring-projects/spring-framework/tree/main/spring-r2dbc)
+
 #### Spring Data
 * Unified programming model for working with various data stores like:
     * Relational databases
     * NoSQL databases
     * Cloud-based databases
 
-#### Spring Transaction
+#### [Spring Transaction Module](https://github.com/spring-projects/spring-framework/tree/main/spring-tx)
 * Manages transactions
     * *Declaratively*
     * *Programmatically*
@@ -105,13 +114,27 @@ Developers can include only the required modules for a given project -> minimizi
 * Scalable applications
 * Event-driven programming
 
-#### Spring Web Services
+#### [Spring WebSocket Module](https://github.com/spring-projects/spring-framework/tree/main/spring-websocket)
+
+#### [Spring Web Services Module](https://github.com/spring-projects/spring-framework/tree/main/spring-web)
 * *SOAP* web services
 * *RESTful* web services
 * *WSDL* contact-first design
 * *XML-based* web service messages
 
 ### 4. Miscellaneous
+#### [Spring AOP Module](https://github.com/spring-projects/spring-framework/tree/main/spring-aop)
+* Simplifying Aspect-Oriented Programming
+
+#### [Spring Aspects Module](https://github.com/spring-projects/spring-framework/tree/main/spring-aspects)
+* Harmonizing Aspect-Oriented Programming
+
+#### [Spring Instrument Module](https://github.com/spring-projects/spring-framework/tree/main/spring-instrument)
+* Monitoring Application Performance
+
+#### [Spring Messaging Module](https://github.com/spring-projects/spring-framework/tree/main/spring-messaging)
+* Streamlining Interaction with Messaging Systems
+
 #### Spring Security
 * Authentication
 * Authorization
