@@ -1,0 +1,24 @@
+[package]
+name = "mime-web"
+description = ""
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = { workspace = true }
+axum = { workspace = true }
+axum-extra = { workspace = true, features = ["typed-header"] }
+chrono = { workspace = true }
+dotenvy = { workspace = true }
+rand = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+tera = { workspace = true }
+tokio = { workspace = true, features = ["full"] }
+tower = { workspace = true }
+tower-cookies = { workspace = true }
+tower-http = { workspace = true, features = ["compression-gzip", "fs"] }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+uuid = { workspace = true, features = ["serde", "v4"] }
+mime-core = { path = "../mime-core" }

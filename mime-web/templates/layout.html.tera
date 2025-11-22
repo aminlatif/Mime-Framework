@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mime Framework</title>
+    <meta name="description" content="Mime Framework Admin panel" />
+    <meta name="author" content="Amin Latifkar" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" type="image/png" href="/static/images/icon.svg" />
+
+    <script src="/static/libraries/tailwindcss/browser@4.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <header class="bg-gray-50">
+      <div class="container mx-auto py-4">
+        <p class="sr-only">Mime Framework</p>
+        <img class="h-16 w-auto" src="/static/images/logo.svg" alt="Mime Framework" title="Mime Framework" />
+      </div>
+    </header>
+    <main class="flex-grow">
+      <div class="container mx-auto py-4">
+        {% block content %}{% endblock content %}
+      </div>
+    </main>
+    <footer class="min-h-16 bg-gray-50">
+
+    </footer>
+  </body>
+</html>
