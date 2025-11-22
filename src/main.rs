@@ -1,10 +1,11 @@
 use std::env;
+use mime_web::services::{WebService, implementations::DefaultWebService};
 use tracing::info;
 
 use mime_data::services::{MigrationService, implementations::DefaultMigrationService};
 
-mod service_container;
 mod initiate_services;
+mod service_container;
 
 use initiate_services::initiate_services;
 
@@ -14,18 +15,22 @@ pub async fn main() -> anyhow::Result<()> {
 
     let args: Vec<String> = env::args().collect();
 
-     let argument_1 = args.get(1).unwrap_or(&String::from("None")).to_owned();
+    let argument_1 = args.get(1).unwrap_or(&String::from("None")).to_owned();
     let argument_2 = args.get(2).unwrap_or(&String::from("None")).to_owned();
     let argument_3 = args.get(3).unwrap_or(&String::from("None")).to_owned();
 
     match argument_1.trim() {
         "migrate" => {
-            let migration_service = DefaultMigrationService::new(dependency_container.datasource_service.clone());
+            let migration_service =
+                DefaultMigrationService::new(dependency_container.datasource_service.clone());
             migration_service.run_migration(vec![argument_2, argument_3]);
-        },
+        }
         _ => {
             info!("Getting ready to start core application...");
-            // clocker_core::main(db).await;
+            let web_service = DefaultWebService::new(
+                dependency_container.configuration_service.clone()
+            );
+            web_service.start().await?;
         }
     }
 
@@ -35,7 +40,3 @@ pub async fn main() -> anyhow::Result<()> {
 
     Ok(())
 }
-
-
-
-
