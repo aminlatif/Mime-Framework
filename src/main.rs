@@ -1,5 +1,6 @@
-use std::env;
 use mime_web::services::{WebService, implementations::DefaultWebService};
+use sea_orm_migration::MigrationTrait;
+use std::env;
 use tracing::info;
 
 use mime_data::services::{MigrationService, implementations::DefaultMigrationService};
@@ -21,15 +22,17 @@ pub async fn main() -> anyhow::Result<()> {
 
     match argument_1.trim() {
         "migrate" => {
-            let migration_service =
-                DefaultMigrationService::new(dependency_container.datasource_service.clone());
-            migration_service.run_migration(vec![argument_2, argument_3]);
+            let migrations: Vec<fn() -> Vec<Box<dyn MigrationTrait>>> = vec![mime_security::migrations::get_migrations];
+            let migration_service = DefaultMigrationService::new(
+                dependency_container.datasource_service.clone(),
+                migrations,
+            );
+            migration_service.run_migrations( vec![argument_2, argument_3]).await;
         }
         _ => {
             info!("Getting ready to start core application...");
-            let web_service = DefaultWebService::new(
-                dependency_container.configuration_service.clone()
-            );
+            let web_service =
+                DefaultWebService::new(dependency_container.configuration_service.clone());
             web_service.start().await?;
         }
     }

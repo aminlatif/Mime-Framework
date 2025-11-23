@@ -1,3 +1,3 @@
 pub trait MigrationService {
-    fn run_migration(&self, params: Vec<String>) -> &String;
+    async fn run_migrations(&self, params: Vec<String>);
 }

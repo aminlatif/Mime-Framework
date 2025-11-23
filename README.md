@@ -5,7 +5,7 @@
     <h4>A Rust Application Framework</h4>
 </div>
 
-Inspired by <b>Java Spring Framework</b> and <b>PHP Symfony</b>.
+Inspired by <b>Java Spring Framework</b>, <b>PHP Symfony</b>, and <b>ASP.NET Core MVC</b>.
 However, Mime has no dynamic <i>Dependency Injection</i> and <i>Inversion of Control</i>,
-instead the wiring should be donr manually. For performance and safety:
-ie. preventing runtime errors and catch them in compile-time.
+instead the wiring should be done manually. For performance and safety:
+ie. preventing runtime errors and catch them while compiling.
