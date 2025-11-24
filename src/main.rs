@@ -38,6 +38,7 @@ pub async fn main() -> anyhow::Result<()> {
                 vec![mime_web::view::get_templates(), mime_security::view::get_templates()];
             let mut web_service = DefaultWebService::new(
                 dependency_container.configuration_service.clone(),
+                dependency_container.datasource_service.clone(),
                 router_items_list,
                 tempaltes_list_list,
             );

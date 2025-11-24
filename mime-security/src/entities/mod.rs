@@ -1,3 +1,5 @@
+pub mod collections;
+pub mod repositories;
 pub mod authority;
 pub mod user;
 

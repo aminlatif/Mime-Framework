@@ -32,6 +32,13 @@
       {% if page_title is defined %}
       <h1 class="text-3xl font-bold mb-4">{{ page_title }}</h1>
       {% endif %}
+
+      {% if flash %}
+      <small class="field-{{ flash.kind }}-flash">
+        {{ flash.message }}
+      </small>
+      {% endif %}
+
       {% block content %}{% endblock content %}
     </div>
   </main>

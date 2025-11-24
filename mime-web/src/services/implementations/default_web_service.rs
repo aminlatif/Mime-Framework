@@ -4,6 +4,7 @@ use std::{
 
 use axum::{http::StatusCode, routing::get_service};
 use mime_core::services::ConfigurationService;
+use mime_data::services::DatasourceService;
 use tower_cookies::CookieManagerLayer;
 use tower_http::services::ServeDir;
 use tracing::{debug, info};
@@ -14,6 +15,7 @@ use crate::{
 
 pub struct DefaultWebService {
     configuration_service: Arc<RwLock<dyn ConfigurationService>>,
+    datasource_service: Arc<RwLock<dyn DatasourceService + Send + Sync>>,
     route_items_list: Vec<RouteItems<AppState>>,
     templates_list_list: Vec<Vec<TemplatePath>>,
     router: axum::Router<AppState>,
@@ -23,6 +25,7 @@ pub struct DefaultWebService {
 impl DefaultWebService {
     pub fn new(
         configuration_service: Arc<RwLock<dyn ConfigurationService>>,
+        datasource_service: Arc<RwLock<dyn DatasourceService + Send + Sync>>,
         route_items_list: Vec<RouteItems<AppState>>,
         templates_list_list: Vec<Vec<TemplatePath>>,
     ) -> Self {
@@ -31,6 +34,7 @@ impl DefaultWebService {
 
         Self {
             configuration_service,
+            datasource_service,
             route_items_list,
             templates_list_list,
             router,
@@ -91,6 +95,7 @@ impl WebService for DefaultWebService {
 
         let state = AppState {
             templates: self.templates.clone(),
+            database_connection: self.datasource_service.read().unwrap().get_connection().clone(),
         };
 
         let app = self

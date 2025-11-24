@@ -11,7 +11,7 @@ pub async fn initiate_services() -> anyhow::Result<ServiceContainer> {
 
     mime_core::helpers::set_tracing_subscriber(configuration_service.clone());
 
-    let datasource_service: Arc<RwLock<dyn DatasourceService>> = Arc::new(RwLock::new(
+    let datasource_service: Arc<RwLock<dyn DatasourceService + Send + Sync>> = Arc::new(RwLock::new(
         PostgresDatasourceService::new(configuration_service.clone()).await,
     ));
 

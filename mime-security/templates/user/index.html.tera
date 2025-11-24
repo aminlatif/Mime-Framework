@@ -1,6 +1,40 @@
 {% extends "layout" %}
 {% block content %}
+<table>
+    <tbody>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Enabled</th>
+            </tr>
+        </thead>
+        {% for user in users %}
+        <tr class="user" onclick="window.location='/{{ user.username }}';">
+            <td>{{ user.username }}</td>
+            <td>{{ user.password }}</td>
+            <td>{{ user.enabled }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td>
+                {% if page == 1 %} Previous {% else %}
+                <a href="/?page={{ page - 1 }}&posts_per_page={{ posts_per_page }}">Previous</a>
+                {% endif %} | {% if page == num_pages %} Next {% else %}
+                <a href="/?page={{ page + 1 }}&posts_per_page={{ posts_per_page }}">Next</a>
+                {% endif %}
+            </td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
 
-<h1 class="text-xl">Users</h1>
-
+<div class="twelve columns">
+    <a href="/user/new">
+        <input type="button" value="add user" />
+    </a>
+</div>
 {% endblock content %}

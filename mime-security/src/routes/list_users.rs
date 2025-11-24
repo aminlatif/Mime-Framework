@@ -3,58 +3,56 @@ use axum::{
     http::StatusCode,
     response::Html,
 };
-use mime_web::types::AppState;
+use mime_web::types::{AppState, FlashData, Params, get_flash_cookie};
+use sea_orm::{EntityTrait, PaginatorTrait, QueryOrder};
 use tower_cookies::Cookies;
-use tracing::debug;
 
 pub async fn list_users(
-    state: State<AppState>,
-    Query(params): Query<()>,
+    State(state): State<AppState>,
+    Query(params): Query<Params>,
     cookies: Cookies,
 ) -> Result<Html<String>, (StatusCode, String)> {
-    let page = 1;
-    let items_per_page = 100;
+    let page = params.page.unwrap_or(1);
+    let items_per_page = params.items_per_page.unwrap_or(100);
+
+    let paginator = crate::entities::user::Entity::find()
+        .order_by_asc(crate::entities::user::Column::Username)
+        .paginate(&state.database_connection, items_per_page);
+
+    let num_pages = paginator
+        .num_pages()
+        .await
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("DB error: {}", e)))?;
+
+    let users = paginator
+        .fetch_page(page - 1)
+        .await
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("DB error: {}", e)))?;
 
     let mut ctx = tera::Context::new();
 
     ctx.insert("page_title", "Users");
 
-    // let template = concat!(env!("CARGO_MANIFEST_DIR"), "/templates/user_list.html.tera");
+    ctx.insert("users", &users);
+    ctx.insert("page", &page);
+    ctx.insert("posts_per_page", &items_per_page);
+    ctx.insert("num_pages", &num_pages);
 
-    // debug!("Template: {}", template);
+    // let data = FlashData {
+    //     kind: "success".to_owned(),
+    //     message: "Post successfully added".to_owned(),
+    // };
+    // ctx.insert("flash", &data);
 
-    // let body: Result<String, (StatusCode, &str)> = state
-    // let body = state
-    //     .templates
-    //     .render("security::user/index", &ctx)
-    //     .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, format!("Template error").to_string().as_str()))?;
-    // .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, "Template error"));
-    // .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Template error: {}", e)))?;
+    if let Some(value) = get_flash_cookie::<FlashData>(&cookies) {
+        ctx.insert("flash", &value);
+    }
+
+
     let body = state
         .templates
         .render("security::user/index", &ctx)
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Template error: {}", e)))?;
 
     Ok(Html(body))
-
-    // let (posts, num_pages) = QueryService::find_posts_in_page(&state.conn, page, posts_per_page)
-    //     .await
-    //     .expect("Cannot find posts in page");
-
-    // let mut ctx = tera::Context::new();
-    // ctx.insert("posts", &posts);
-    // ctx.insert("page", &page);
-    // ctx.insert("posts_per_page", &posts_per_page);
-    // ctx.insert("num_pages", &num_pages);
-
-    // if let Some(value) = get_flash_cookie::<FlashData>(&cookies) {
-    //     ctx.insert("flash", &value);
-    // }
-
-    // let body = state
-    //     .templates
-    //     .render("index.html.tera", &ctx)
-    //     .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, "Template error"))?;
-
-    // Ok(Html(body))
 }

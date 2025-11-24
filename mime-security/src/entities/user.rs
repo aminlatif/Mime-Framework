@@ -8,9 +8,6 @@ use uuid::Uuid;
 #[sea_orm(table_name = "users")]
 pub struct Model {
     #[sea_orm(primary_key)]
-    #[serde(skip_deserializing)]
-    pub id: Uuid,
-
     #[sea_orm(column_type = "String(StringLen::N(50))")]
     pub username: String,
 
@@ -18,7 +15,8 @@ pub struct Model {
     pub password: String,
 
     #[sea_orm(column_type = "Boolean")]
-    pub boolean: bool,
+    #[serde(skip_deserializing)]
+    pub enabled: bool,
 }
 
 // #[derive(Copy, Clone, Debug, EnumIter)]

@@ -14,7 +14,7 @@ members = [".", "mime-core", "mime-data", "mime-web"]
 [workspace.dependencies]
 anyhow = { version =  "1.0" }
 async-trait = "0.1.89"
-axum = "0.8.7"
+axum = { version="0.8.7", features = ["macros"] }
 axum-extra = { version = "0.12.2", features = ["typed-header"] }
 chrono = { version = "0.4.42" }
 dotenvy = "0.15.7"
