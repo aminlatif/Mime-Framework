@@ -34,7 +34,7 @@ pub async fn dashboard(
 
     let body = state
         .templates
-        .render("index.html.tera", &ctx)
+        .render("dashboard", &ctx)
         .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, "Template error"))?;
 
     Ok(Html(body))

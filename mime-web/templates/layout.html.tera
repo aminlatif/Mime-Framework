@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Mime Framework</title>
-    <meta name="description" content="Mime Framework Admin panel" />
-    <meta name="author" content="Amin Latifkar" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" type="image/png" href="/static/images/icon.svg" />
+<head>
+  <meta charset="utf-8" />
+  {% if page_title is defined %}
+  <title>{{ page_title }} | Mime Framework</title>
+  {% else %}
+  <title>Mime Framework</title>
+  {% endif %}
 
-    <script src="/static/libraries/tailwindcss/browser@4.js"></script>
-    <link rel="stylesheet" href="/static/css/style.css" />
-  </head>
-  <body class="flex min-h-screen flex-col">
-    <header class="bg-gray-50">
-      <div class="container mx-auto py-4">
-        <p class="sr-only">Mime Framework</p>
-        <img class="h-16 w-auto" src="/static/images/logo.svg" alt="Mime Framework" title="Mime Framework" />
-      </div>
-    </header>
-    <main class="flex-grow">
-      <div class="container mx-auto py-4">
-        {% block content %}{% endblock content %}
-      </div>
-    </main>
-    <footer class="min-h-16 bg-gray-50">
+  <meta name="description" content="Mime Framework Admin panel" />
+  <meta name="author" content="Amin Latifkar" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    </footer>
-  </body>
+  <link rel="icon" type="image/png" href="/static/images/icon.svg" />
+
+  <script src="/static/libraries/tailwindcss/browser@4.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+
+<body class="flex min-h-screen flex-col">
+  <header class="bg-gray-50">
+    <div class="container mx-auto py-4">
+      <p class="sr-only">Mime Framework</p>
+      <img class="h-16 w-auto" src="/static/images/logo.svg" alt="Mime Framework" title="Mime Framework" />
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    <div class="container mx-auto py-4">
+      {% if page_title is defined %}
+      <h1 class="text-3xl font-bold mb-4">{{ page_title }}</h1>
+      {% endif %}
+      {% block content %}{% endblock content %}
+    </div>
+  </main>
+
+  <footer class="min-h-16 bg-gray-50">
+    <div class="container mx-auto py-4 flex flex-col justify-center">
+      Mime Framework - Web @ 2025
+    </div>
+  </footer>
+</body>
+
 </html>

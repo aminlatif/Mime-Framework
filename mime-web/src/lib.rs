@@ -1,8 +1,12 @@
+pub mod helpers;
+
 pub mod routes;
 
 pub mod services;
 
 pub mod types;
+
+pub mod view;
 
 // use axum::{
 //     Router,

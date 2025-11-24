@@ -1,3 +1,3 @@
 pub trait WebService {
-    async fn start(&self) -> anyhow::Result<()>;
+    async fn start(&mut self) -> anyhow::Result<()>;
 }

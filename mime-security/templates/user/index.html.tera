@@ -1,0 +1,6 @@
+{% extends "layout" %}
+{% block content %}
+
+<h1 class="text-xl">Users</h1>
+
+{% endblock content %}

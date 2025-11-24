@@ -1,5 +1,13 @@
-mod web_service;
+use axum::routing::get;
+use mime_web::types::{AppState, RouteItems};
 
-pub mod implementations;
+mod list_users;
 
-pub use web_service::WebService;
+pub use list_users::list_users;
+
+pub fn get_routes() -> RouteItems<AppState> {
+    let mut route_items = RouteItems::new();
+    route_items.add("/user", get(list_users));
+
+    route_items
+}

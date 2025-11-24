@@ -25,3 +25,5 @@ tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 uuid = { workspace = true, features = ["serde", "v4"] }
 mime-core = { path = "../mime-core" }
+mime-data = { path = "../mime-data" }
+mime-web = { path = "../mime-web" }

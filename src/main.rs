@@ -1,4 +1,7 @@
-use mime_web::services::{WebService, implementations::DefaultWebService};
+use mime_web::{
+    services::{WebService, implementations::DefaultWebService},
+    types::{AppState, RouteItems, TemplatePath},
+};
 use sea_orm_migration::MigrationTrait;
 use std::env;
 use tracing::info;
@@ -23,16 +26,21 @@ pub async fn main() -> anyhow::Result<()> {
     match argument_1.trim() {
         "migrate" => {
             let migrations: Vec<fn() -> Vec<Box<dyn MigrationTrait>>> = vec![mime_security::migrations::get_migrations];
-            let migration_service = DefaultMigrationService::new(
-                dependency_container.datasource_service.clone(),
-                migrations,
-            );
-            migration_service.run_migrations( vec![argument_2, argument_3]).await;
+            let migration_service =
+                DefaultMigrationService::new(dependency_container.datasource_service.clone(), migrations);
+            migration_service.run_migrations(vec![argument_2, argument_3]).await;
         }
         _ => {
             info!("Getting ready to start core application...");
-            let web_service =
-                DefaultWebService::new(dependency_container.configuration_service.clone());
+            let router_items_list: Vec<RouteItems<AppState>> =
+                vec![mime_web::routes::get_routes(), mime_security::routes::get_routes()];
+            let tempaltes_list_list: Vec<Vec<TemplatePath>> =
+                vec![mime_web::view::get_templates(), mime_security::view::get_templates()];
+            let mut web_service = DefaultWebService::new(
+                dependency_container.configuration_service.clone(),
+                router_items_list,
+                tempaltes_list_list,
+            );
             web_service.start().await?;
         }
     }

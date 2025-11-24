@@ -11,7 +11,17 @@ impl MigrationTrait for Migration {
                 Table::create()
                     .table("acl_sid")
                     .if_not_exists()
-                    .col(ColumnDef::new("username").string_len(50).not_null().primary_key())
+                    .col(ColumnDef::new("id").uuid().not_null().primary_key().default(Expr::cust("gen_random_uuid()")))
+                    .col(ColumnDef::new("principal").boolean().not_null())
+                    .col(ColumnDef::new("sid").string_len(100).not_null())
+                    .index(
+                        Index::create()
+                            .name("idx_acl_sid_sid_principal")
+                            .table("acl_sid")
+                            .col("sid")
+                            .col("principal")
+                            .unique(),
+                    )
                     .to_owned(),
             )
             .await

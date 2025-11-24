@@ -144,6 +144,8 @@ Developers can include only the required modules for a given project -> minimizi
 * OAuth2
 * JWT
 
+[schema](https://docs.spring.io/spring-security/reference/servlet/appendix/database-schema.html)
+
 #### Spring Integration
 * Message-driven architecture
 * Event-driven architecture
