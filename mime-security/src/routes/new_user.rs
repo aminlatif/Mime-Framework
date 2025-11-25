@@ -12,7 +12,9 @@ pub async fn new_user(
     Query(params): Query<Params>,
     cookies: Cookies,
 ) -> Result<Html<String>, (StatusCode, String)> {
-    let ctx = tera::Context::new();
+    let mut ctx = tera::Context::new();
+
+    ctx.insert("page_title", "Add User");
 
     let body = state
         .templates

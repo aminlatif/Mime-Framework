@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@source "../../../../**/*.{html,tera}";
+
+a {
+    @apply cursor-pointer text-gray-900 hover:text-gray-500;
+}
+
+button {
+    @apply cursor-pointer;
+}
+
+.admin-action {
+    @apply border border-gray-500 text-gray-600 py-2 px-4 inline-block rounded-lg hover:bg-gray-100 hover:text-gray-900;
+}
+
+.admin-action.primary {
+    @apply border-green-300 bg-green-300 text-white font-bold hover:bg-green-500 hover:border-green-500;
+}
+
+.admin-action.delete {
+    @apply border-red-200 text-red-300 hover:bg-red-50;
+}
+
+.admin-action.cancel {
+    @apply border-white bg-white hover:bg-gray-100;
+}
+
+.admin-data-table {
+    @apply w-full text-left text-sm text-gray-600;
+}
+
+.admin-data-table th {
+    @apply text-center;
+}
+
+.admin-data-table td, .admin-data-table th {
+    @apply px-4 py-2 border border-gray-300;
+}
+
+.admin-data-table .table-action {
+    @apply text-center text-xs font-bold;
+}
+
+.admin-data-table .table-action.edit {
+    @apply text-blue-600 hover:text-blue-800;
+}
+
+.admin-data-table .table-action.delete {
+    @apply text-red-600 hover:text-red-800;
+}
+
+.pager {
+    @apply text-sm text-gray-500 mt-4 flex justify-center;
+}
+
+.pager-item {
+    @apply inline-block px-3 py-1 mx-3 rounded border border-gray-300;
+}
+
+.pager-item.disabled {
+    @apply opacity-50 cursor-not-allowed;
+}
+
+.field-wrapper {
+    @apply mb-5 flex flex-col gap-2;
+}
+
+.field-wrapper.checkbox {
+    @apply flex-row items-center;
+}
+
+.field-wrapper label {
+    @apply w-32 text-sm font-bold text-gray-600;
+}
+
+.field-wrapper.checkbox label {
+    @apply cursor-pointer;
+}
+
+.field-wrapper .input-box {
+    @apply flex-grow;
+}
+
+.field-wrapper.checkbox .input-box {
+    @apply flex-grow-0;
+}
+
+.field-wrapper .input-box input {
+    @apply border border-gray-300 p-2 w-full rounded;
+}
+
+.flash-message {
+    @apply text-sm text-gray-600 py-2 px-4 rounded border border-gray-300 bg-gray-50 mb-5 ;
+}
+
+.flash-message.success-flash {
+    @apply text-green-600 border-green-300 bg-green-50;
+}

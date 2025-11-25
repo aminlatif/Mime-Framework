@@ -1,0 +1,1 @@
+watchexec.exe --exts rs,tera -r cargo run

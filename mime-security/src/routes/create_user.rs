@@ -12,20 +12,31 @@ pub async fn create_user(
 ) -> Result<PostResponse, (StatusCode, String)> {
     let form = form.0;
 
-    let data = FlashData {
-        kind: "success".to_owned(),
-        message: "User successfully added".to_owned(),
-    };
+    let username = form.username.clone();
 
-    crate::entities::user::ActiveModel {
+    let result =crate::entities::user::ActiveModel {
         username: Set(form.username),
         password: Set(form.password),
         enabled: Set(form.enabled),
         ..Default::default()
+    }.insert(&state.database_connection)
+    .await;
+
+    if result.is_err() {
+        let data = FlashData {
+            kind: "error".to_owned(),
+            message: format!("User creation failed: {}", result.err().unwrap()).to_owned(),
+        };
+
+        return Ok(post_response(&mut cookies, data, "/user/new".to_owned()))
     }
-    .insert(&state.database_connection)
-    .await
-    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("DB error: {}", e)))?;
+
+    // .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("DB error: {}", e)))?;
+
+    let data = FlashData {
+        kind: "success".to_owned(),
+        message: format!("User \"{}\" successfully created.", username).to_owned(),
+    };
 
     Ok(post_response(&mut cookies, data, "/user".to_owned()))
 }

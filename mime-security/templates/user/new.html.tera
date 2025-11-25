@@ -1,33 +1,42 @@
 {% extends "layout" %}
+
+{% block actions %}
+<a href="/user" class="admin-action cancel">
+    Cancel
+</a>
+
+<button type="submit" class="admin-action save primary" form="new-user-form">Save</button>
+{% endblock actions %}
+
 {% block content %}
-<form action="/user" method="post">
-    <div class="twelve columns">
-        <div>
+<form action="/user" method="post" id="new-user-form">
+    <fieldset>
+        <div class="field-wrapper">
             <label for="username">Username</label>
-            <input type="text" placeholder="enter username" name="username" id="username" value=""class="u-full-width" />
+            <div class="input-box">
+                <input type="text" placeholder="enter username" name="username" id="username" value=""
+                    class="u-full-width" />
+            </div>
+            <div class="field-error"></div>
         </div>
 
-        <div>
+        <div class="field-wrapper">
             <label for="password">Password</label>
-            <input type="text" placeholder="enter password" name="password" id="password" value=""class="u-full-width" />
+            <div class="input-box">
+                <input type="text" placeholder="enter password" name="password" id="password" value=""
+                    class="u-full-width" />
+            </div>
+            <div class="field-error"></div>
         </div>
 
-        <div>
-            <input type="checkbox" name="enabled" id="enabled" value="" class="" />
+        <div class="field-wrapper checkbox">
+            <div class="input-box">
+                <input type="checkbox" name="enabled" id="enabled" value="" class="" />
+            </div>
             <label for="enabled">Enabled</label>
+            <div class="field-error"></div>
         </div>
-    </div>
-    <div class="twelve columns">
-        <div class="two columns">
-            <a href="/user">
-                <input type="button" value="cancel" />
-            </a>
-        </div>
-        <div class="eight columns"></div>
-        <div class="two columns">
-            <input type="submit" value="save user" />
-        </div>
-    </div>
+    </fieldset>
 </form>
 
 {% endblock content %}

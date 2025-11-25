@@ -1,40 +1,59 @@
 {% extends "layout" %}
+
+{% block actions %}
+<a href="/user/new" class="admin-action add">
+    Add User
+</a>
+{% endblock actions %}
+
 {% block content %}
-<table>
+<table class="admin-data-table">
     <tbody>
         <thead>
             <tr>
                 <th>Username</th>
                 <th>Password</th>
                 <th>Enabled</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         {% for user in users %}
-        <tr class="user" onclick="window.location='/{{ user.username }}';">
+        <tr class="user" onclick="window.location='/user/{{ user.username }}';">
             <td>{{ user.username }}</td>
             <td>{{ user.password }}</td>
-            <td>{{ user.enabled }}</td>
+            <td class="text-center">{{ user.enabled }}</td>
+            <td class="text-center">
+                <a class="table-action edit">Edit</a>
+            </td>
+            <td class="text-center">
+                <a class="table-action delete">Delete</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
-    <tfoot>
-        <tr>
-            <td></td>
-            <td>
-                {% if page == 1 %} Previous {% else %}
-                <a href="/?page={{ page - 1 }}&posts_per_page={{ posts_per_page }}">Previous</a>
-                {% endif %} | {% if page == num_pages %} Next {% else %}
-                <a href="/?page={{ page + 1 }}&posts_per_page={{ posts_per_page }}">Next</a>
-                {% endif %}
-            </td>
-            <td></td>
-        </tr>
-    </tfoot>
 </table>
 
-<div class="twelve columns">
-    <a href="/user/new">
-        <input type="button" value="add user" />
+<span class="pager">
+    {% if page == 1 %}
+    <span class="pager-item prev disabled">
+        Previous
+    </span>
+    {% else %}
+    <a href="/?page={{ page - 1 }}&posts_per_page={{ posts_per_page }}" class="pager-item prev">
+        Previous
     </a>
-</div>
-{% endblock content %}
+    {% endif %}
+    {# | #}
+    {% if page == num_pages %}
+    <span class="pager-item next disabled">
+        Next
+    </span>
+    {% else %}
+    <a href="/?page={{ page + 1 }}&posts_per_page={{ posts_per_page }}" class="pager-item next">
+        Next
+    </a>
+    {% endif %}
+    </div>
+
+    {% endblock content %}

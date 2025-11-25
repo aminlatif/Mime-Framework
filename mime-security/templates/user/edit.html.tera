@@ -1,6 +1,47 @@
 {% extends "layout" %}
+
+{% block actions %}
+<a href="/user" class="admin-action cancel">
+    Cancel
+</a>
+
+<button type="submit" class="admin-action delete" form="delete-user-form">Delete</button>
+
+<button type="submit" class="admin-action save primary" form="edit-user-form">Save</button>
+{% endblock actions %}
+
 {% block content %}
-<div class="twelve columns">
+<form action="/user/delete/{{ user.username }}" method="post" id="delete-user-form"></form>
+<form action="/user/{{ user.username }}" method="post" id="edit-user-form">
+    <fieldset>
+        <div class="field-wrapper">
+            <label for="username">Username</label>
+            <div class="input-box">
+                <input type="text" placeholder="enter username" name="username" id="username" value="{{ user.username }}"
+                    class="u-full-width" />
+            </div>
+            <div class="field-error"></div>
+        </div>
+
+        <div class="field-wrapper">
+            <label for="password">Password</label>
+            <div class="input-box">
+                <input type="text" placeholder="enter password" name="password" id="password" value="{{ user.password }}"
+                    class="u-full-width" />
+            </div>
+            <div class="field-error"></div>
+        </div>
+
+        <div class="field-wrapper checkbox">
+            <div class="input-box">
+                <input type="checkbox" name="enabled" id="enabled" value="" class="{{ user.enabled }}" />
+            </div>
+            <label for="enabled">Enabled</label>
+            <div class="field-error"></div>
+        </div>
+    </fieldset>
+</form>
+{# <div class="twelve columns">
     <div class="ten columns">
         <form action="/{{ post.id }}" method="post">
             <div class="twelve columns">
@@ -29,5 +70,5 @@
             </div>
         </form>
     </div>
-</div>
+</div> #}
 {% endblock content %}

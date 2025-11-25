@@ -15,8 +15,10 @@
 
   <link rel="icon" type="image/png" href="/static/images/icon.svg" />
 
-  <script src="/static/libraries/tailwindcss/browser@4.js"></script>
-  <link rel="stylesheet" href="/static/css/style.css" />
+  {#
+  <script src="/static/libraries/tailwindcss/browser@4.js"></script> #}
+  <script src="/static/admin_theme/dist/index.js"></script>
+  <link rel="stylesheet" href="/static/admin_theme/dist/index.css" />
 </head>
 
 <body class="flex min-h-screen flex-col">
@@ -29,14 +31,21 @@
 
   <main class="flex-grow">
     <div class="container mx-auto py-4">
-      {% if page_title is defined %}
-      <h1 class="text-3xl font-bold mb-4">{{ page_title }}</h1>
-      {% endif %}
+      <div class="flex justify-between mb-8 items-center">
+        <h1 class="text-3xl font-bold">
+          {% if page_title is defined %}
+          {{ page_title }}
+          {% endif %}
+        </h1>
+        <div class="flex justify-end items-center gap-4">
+        {% block actions %}{% endblock actions %}
+        </div>
+      </div>
 
       {% if flash %}
-      <small class="field-{{ flash.kind }}-flash">
+      <div class="flash-message {{ flash.kind }}-flash">
         {{ flash.message }}
-      </small>
+      </div>
       {% endif %}
 
       {% block content %}{% endblock content %}
